@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Color-By-Math — Offline Prototype</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Pixel Math Color-By-Number — Offline Prototype</h1>
+  </header>
+
+  <main>
+    <!-- Section 1: Build Puzzle -->
+    <section class="card">
+      <h2>1) Build a puzzle from any image</h2>
+      <div class="content controls">
+        <label>Upload image (PNG/JPG/WebP)</label>
+        <input id="fileInput" type="file" accept="image/*" />
+
+        <div class="row" style="margin-top:10px">
+          <div style="flex:1">
+            <label>Grid width (pixels)</label>
+            <input id="gridW" type="range" min="8" max="64" value="64" />
+            <div class="hint"><span id="gridWVal">64</span> columns — height auto from image ratio</div>
+          </div>
+          <div style="flex:1">
+            <label>Max colors <small id="colorCapHint"></small></label>
+            <input id="maxColors" type="range" min="1" value="100" />
+            <div class="hint"><span id="maxColorsVal">100</span> colors</div>
+          </div>
+        </div>
+
+        <div style="flex:1">
+          <label>Number of questions</label>
+          <input id="numQuestions" type="number" min="1" value="8" />
+          <div class="hint"><span id="numQuestionsVal">8</span> questions</div>
+        </div>
+
+        <div class="row" style="margin-top:10px">
+          <div style="flex:1">
+            <label>Factor min</label>
+            <input id="factorMin" type="number" min="1" value="1" />
+          </div>
+          <div style="flex:1">
+            <label>Factor max</label>
+            <input id="factorMax" type="number" min="1" value="12" />
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:10px">
+          <div style="flex:1">
+            <label>Cell size (px)</label>
+            <input id="cellSize" type="range" min="10" max="28" value="10" />
+            <div class="hint"><span id="cellSizeVal">10</span> px</div>
+          </div>
+          <div style="width:220px;align-self:flex-end;text-align:right; display:flex; gap:8px; justify-content:flex-end">
+            <button id="previewBtn" class="secondary" disabled>Preview image</button>
+            <button id="generateBtn" disabled>Generate puzzle</button>
+            
+          </div>
+        </div>
+        <p class="hint">All processing happens locally in your browser. Nothing is uploaded.</p>
+      </div>
+      <div class="footer">Tip: After generating, use <span class="kbd">Ctrl</span> + <span class="kbd">S</span> to save this page.</div>
+    </section>
+
+    <!-- Section 2: Play -->
+    <section class="card" style="grid-column:span 1;">
+      <h2>2) Play</h2>
+      <div class="content">
+        <div class="problem">
+          <div class="pill"><div class="dot"></div> Current problem</div>
+          <div style="flex:1"></div>
+          <div class="status">Solved <span id="solvedCount">0</span>/<span id="totalProblems">0</span></div>
+        </div>
+        <div class="row" style="margin-top:8px">
+          <strong id="question">—</strong>
+          <input id="answer" type="number" placeholder="Answer" style="max-width:120px" />
+          <button id="submitBtn" class="secondary" disabled>Submit</button>
+          <button id="skipBtn" class="secondary" disabled>Skip</button>
+          <button id="revealBtn" class="secondary" disabled>Reveal all</button>
+        </div>
+      </div>
+      <div class="gridWrap"><div id="grid" aria-label="puzzle grid"></div></div>
+      <div class="content">
+        <h3 style="margin:0 0 8px 0;font-size:14px;color:#cbd5e1">Legend</h3>
+        <div id="legend" class="legend"></div>
+      </div>
+    </section>
+  </main>
+
+  <canvas id="workCanvas" style="display:none"></canvas>
+  <script src="script.js"></script>
+</body>
+</html>
